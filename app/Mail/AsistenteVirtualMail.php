@@ -18,7 +18,7 @@ class AsistenteVirtualMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            textString: 'Este mensaje fue enviado por el asistente virtual.',
+            text: 'emails.asistente-virtual',
         );
     }
 }

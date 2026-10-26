@@ -22,6 +22,13 @@ class AsistenteVirtualTest extends TestCase
         config(['services.asistente_virtual.code' => self::ACCESS_CODE]);
     }
 
+    public function test_the_email_mailable_renders_its_plain_text_content(): void
+    {
+        $mail = new AsistenteVirtualMail;
+
+        $mail->assertSeeInText('Este mensaje fue enviado por el asistente virtual.');
+    }
+
     public function test_it_sends_and_records_an_email_address(): void
     {
         Mail::fake();
