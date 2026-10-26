@@ -14,7 +14,7 @@ class ProductionMigrationTriggerTest extends TestCase
         parent::setUp();
 
         $this->app['env'] = 'production';
-        config(['services.asistente_virtual.code' => self::CODE]);
+        config(['services.validate_url.code' => self::CODE]);
     }
 
     public function test_it_requires_production_and_the_configured_code(): void
@@ -31,7 +31,7 @@ class ProductionMigrationTriggerTest extends TestCase
     public function test_it_does_not_run_migrations_when_the_configured_code_is_missing(): void
     {
         Artisan::shouldReceive('call')->never();
-        config(['services.asistente_virtual.code' => '']);
+        config(['services.validate_url.code' => '']);
 
         $response = $this->post('/maintenance/migrations/'.self::CODE);
 

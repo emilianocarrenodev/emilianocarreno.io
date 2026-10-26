@@ -18,9 +18,7 @@ class SentEmailTest extends TestCase
         parent::setUp();
 
         config([
-            'services.asistente_virtual.code' => 'assistant-test-code',
-            'services.salesforce.code' => 'salesforce-test-code',
-            'services.wordpress.code' => 'wordpress-test-code',
+            'services.validate_url.code' => 'shared-test-code',
         ]);
     }
 
@@ -30,18 +28,18 @@ class SentEmailTest extends TestCase
 
         $this->getJson(route('asistente-virtual', [
             'email' => 'persona@example.com',
-            'code' => 'assistant-test-code',
+            'code' => 'shared-test-code',
         ]))->assertCreated();
 
         $this->getJson(route('salesforce', [
             'email' => 'persona@example.com',
-            'code' => 'salesforce-test-code',
+            'code' => 'shared-test-code',
         ]))->assertStatus(409)
             ->assertJson(['message' => 'Ya se envió un email a esta dirección.']);
 
         $this->getJson(route('wordpress', [
             'email' => 'persona@example.com',
-            'code' => 'wordpress-test-code',
+            'code' => 'shared-test-code',
         ]))->assertStatus(409)
             ->assertJson(['message' => 'Ya se envió un email a esta dirección.']);
 

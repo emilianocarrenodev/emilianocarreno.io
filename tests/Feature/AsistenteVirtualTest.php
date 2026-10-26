@@ -18,7 +18,7 @@ class AsistenteVirtualTest extends TestCase
     {
         parent::setUp();
 
-        config(['services.asistente_virtual.code' => self::ACCESS_CODE]);
+        config(['services.validate_url.code' => self::ACCESS_CODE]);
     }
 
     public function test_the_email_mailable_renders_branded_html_and_plain_text_content(): void

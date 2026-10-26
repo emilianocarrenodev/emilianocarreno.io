@@ -9,7 +9,7 @@ class ProductionMigrationController extends Controller
 {
     public function confirm(string $code): Response
     {
-        $expectedCode = (string) config('services.asistente_virtual.code');
+        $expectedCode = (string) config('services.validate_url.code');
 
         if ($expectedCode === '' || ! hash_equals($expectedCode, $code)) {
             return response('', Response::HTTP_OK);
@@ -20,7 +20,7 @@ class ProductionMigrationController extends Controller
 
     public function run(string $code): Response
     {
-        $expectedCode = (string) config('services.asistente_virtual.code');
+        $expectedCode = (string) config('services.validate_url.code');
 
         if ($expectedCode === '' || ! hash_equals($expectedCode, $code)) {
             return response('', Response::HTTP_OK);

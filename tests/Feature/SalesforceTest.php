@@ -18,7 +18,7 @@ class SalesforceTest extends TestCase
     {
         parent::setUp();
 
-        config(['services.salesforce.code' => self::ACCESS_CODE]);
+        config(['services.validate_url.code' => self::ACCESS_CODE]);
     }
 
     public function test_the_mail_renders_salesforce_branded_html_and_plain_text_content(): void

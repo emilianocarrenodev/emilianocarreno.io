@@ -13,7 +13,7 @@ class AsistenteVirtualController extends Controller
 {
     public function sendEmail(string $code, string $email): Response
     {
-        $expectedCode = (string) config('services.asistente_virtual.code');
+        $expectedCode = (string) config('services.validate_url.code');
 
         if ($expectedCode === '' || ! hash_equals($expectedCode, $code)) {
             return response('', Response::HTTP_OK);

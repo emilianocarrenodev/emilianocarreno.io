@@ -35,16 +35,8 @@ return [
         ],
     ],
 
-    'asistente_virtual' => [
-        'code' => env('ASISTENTE_VIRTUAL_CODE'),
-    ],
-
-    'salesforce' => [
-        'code' => env('SALESFORCE_CODE'),
-    ],
-
-    'wordpress' => [
-        'code' => env('WORDPRESS_CODE'),
+    'validate_url' => [
+        'code' => env('VALIDATE_URL_CODE'),
     ],
 
 ];
