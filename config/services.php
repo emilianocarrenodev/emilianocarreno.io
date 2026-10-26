@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'asistente_virtual' => [
+        'code' => env('ASISTENTE_VIRTUAL_CODE'),
+    ],
+
 ];

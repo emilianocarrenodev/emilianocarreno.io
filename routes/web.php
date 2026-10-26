@@ -7,5 +7,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/asistente-virtual', [AsistenteVirtualController::class, 'sendEmail'])
+Route::get('/asistente-virtual/{code}/{email}', [AsistenteVirtualController::class, 'sendEmail'])
     ->name('asistente-virtual');

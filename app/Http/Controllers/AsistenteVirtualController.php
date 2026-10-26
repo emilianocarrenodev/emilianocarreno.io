@@ -4,20 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Mail\AsistenteVirtualMail;
 use App\Models\AsistenteVirtualEmail;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class AsistenteVirtualController extends Controller
 {
-    public function sendEmail(Request $request): JsonResponse
+    public function sendEmail(string $code, string $email): Response
     {
-        $validated = $request->validate([
-            'email' => ['required', 'email', 'max:255'],
-        ]);
+        $expectedCode = (string) config('services.asistente_virtual.code');
 
-        $email = mb_strtolower($validated['email']);
+        if ($expectedCode === '' || ! hash_equals($expectedCode, $code)) {
+            return response('', Response::HTTP_OK);
+        }
+
+        Validator::make(['email' => $email], [
+            'email' => ['required', 'email', 'max:255'],
+        ])->validate();
+
+        $email = mb_strtolower($email);
         $delivery = AsistenteVirtualEmail::firstOrCreate(['email' => $email]);
 
         if (! $delivery->wasRecentlyCreated) {
