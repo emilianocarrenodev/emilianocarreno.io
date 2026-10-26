@@ -8,11 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('asistente_virtual_email_sends', function (Blueprint $table) {
-            $table->id();
-            $table->string('email')->unique();
-            $table->timestamps();
-        });
+        if (! Schema::hasTable('asistente_virtual_email_sends')) {
+            Schema::create('asistente_virtual_email_sends', function (Blueprint $table) {
+                $table->id();
+                $table->string('email')->unique();
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void
