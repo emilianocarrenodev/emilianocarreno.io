@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AsistenteVirtualMail;
-use App\Models\AsistenteVirtualEmail;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\SentEmail;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -26,14 +24,13 @@ class AsistenteVirtualController extends Controller
         ])->validate();
 
         $email = mb_strtolower($email);
-        $this->createEmailSendsTableIfMissing();
 
-        $delivery = AsistenteVirtualEmail::firstOrCreate(['email' => $email]);
+        $delivery = SentEmail::firstOrCreate(['email' => $email]);
 
         if (! $delivery->wasRecentlyCreated) {
             return response()->json([
                 'message' => 'Ya se envió un email a esta dirección.',
-            ], 409);
+            ], Response::HTTP_CONFLICT);
         }
 
         try {
@@ -46,19 +43,6 @@ class AsistenteVirtualController extends Controller
 
         return response()->json([
             'message' => 'Email enviado correctamente.',
-        ], 201);
-    }
-
-    private function createEmailSendsTableIfMissing(): void
-    {
-        if (Schema::hasTable('asistente_virtual_email_sends')) {
-            return;
-        }
-
-        Schema::create('asistente_virtual_email_sends', function (Blueprint $table): void {
-            $table->id();
-            $table->string('email')->unique();
-            $table->timestamps();
-        });
+        ], Response::HTTP_CREATED);
     }
 }

@@ -39,4 +39,12 @@ return [
         'code' => env('ASISTENTE_VIRTUAL_CODE'),
     ],
 
+    'salesforce' => [
+        'code' => env('SALESFORCE_CODE'),
+    ],
+
+    'wordpress' => [
+        'code' => env('WORDPRESS_CODE'),
+    ],
+
 ];

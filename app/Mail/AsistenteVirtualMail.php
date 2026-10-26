@@ -11,14 +11,15 @@ class AsistenteVirtualMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Mensaje del asistente virtual',
+            subject: 'Full Stack Developer & Salesforce',
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            text: 'emails.asistente-virtual',
+            html: 'emails.asistente-virtual',
+            text: 'emails.asistente-virtual-texto',
         );
     }
 }

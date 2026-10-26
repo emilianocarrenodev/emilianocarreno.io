@@ -3,10 +3,9 @@
 namespace Tests\Feature;
 
 use App\Mail\AsistenteVirtualMail;
-use App\Models\AsistenteVirtualEmail;
+use App\Models\SentEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
 class AsistenteVirtualTest extends TestCase
@@ -22,11 +21,16 @@ class AsistenteVirtualTest extends TestCase
         config(['services.asistente_virtual.code' => self::ACCESS_CODE]);
     }
 
-    public function test_the_email_mailable_renders_its_plain_text_content(): void
+    public function test_the_email_mailable_renders_branded_html_and_plain_text_content(): void
     {
         $mail = new AsistenteVirtualMail;
 
-        $mail->assertSeeInText('Este mensaje fue enviado por el asistente virtual.');
+        $mail->assertHasSubject('Emiliano Carreño | Full Stack Developer & Salesforce')
+            ->assertSeeInHtml('Hola, soy Emiliano Carreño')
+            ->assertSeeInHtml('10+ años · Laravel')
+            ->assertSeeInHtml('Ver portafolio')
+            ->assertSeeInText('10+ años con Laravel')
+            ->assertSeeInText('Este mensaje fue enviado por el asistente virtual de Emiliano Carreño.');
     }
 
     public function test_it_sends_and_records_an_email_address(): void
@@ -41,7 +45,7 @@ class AsistenteVirtualTest extends TestCase
         $response->assertCreated()
             ->assertJson(['message' => 'Email enviado correctamente.']);
 
-        $this->assertDatabaseHas('asistente_virtual_email_sends', [
+        $this->assertDatabaseHas('sent_emails', [
             'email' => 'persona@example.com',
         ]);
 
@@ -50,27 +54,14 @@ class AsistenteVirtualTest extends TestCase
         });
     }
 
-    public function test_it_creates_the_email_sends_table_if_it_does_not_exist(): void
+    public function test_it_returns_409_and_does_not_send_again_to_a_recorded_address(): void
     {
         Mail::fake();
-        Schema::drop('asistente_virtual_email_sends');
 
-        $response = $this->getJson(route('asistente-virtual', [
+        SentEmail::create([
             'email' => 'persona@example.com',
-            'code' => self::ACCESS_CODE,
-        ]));
-
-        $response->assertCreated();
-        $this->assertDatabaseHas('asistente_virtual_email_sends', [
-            'email' => 'persona@example.com',
+            'source' => 'asistente_virtual',
         ]);
-    }
-
-    public function test_it_does_not_send_another_email_to_a_recorded_address(): void
-    {
-        Mail::fake();
-
-        AsistenteVirtualEmail::create(['email' => 'persona@example.com']);
 
         $response = $this->getJson(route('asistente-virtual', [
             'email' => 'PERSONA@example.com',
@@ -81,7 +72,7 @@ class AsistenteVirtualTest extends TestCase
             ->assertJson(['message' => 'Ya se envió un email a esta dirección.']);
 
         Mail::assertNothingOutgoing();
-        $this->assertDatabaseCount('asistente_virtual_email_sends', 1);
+        $this->assertDatabaseCount('sent_emails', 1);
     }
 
     public function test_it_requires_a_valid_email_address(): void
@@ -97,7 +88,7 @@ class AsistenteVirtualTest extends TestCase
             ->assertJsonValidationErrors('email');
 
         Mail::assertNothingOutgoing();
-        $this->assertDatabaseCount('asistente_virtual_email_sends', 0);
+        $this->assertDatabaseCount('sent_emails', 0);
     }
 
     public function test_it_returns_a_blank_page_and_does_not_send_with_an_invalid_code(): void
@@ -113,6 +104,6 @@ class AsistenteVirtualTest extends TestCase
             ->assertContent('');
 
         Mail::assertNothingOutgoing();
-        $this->assertDatabaseCount('asistente_virtual_email_sends', 0);
+        $this->assertDatabaseCount('sent_emails', 0);
     }
 }
