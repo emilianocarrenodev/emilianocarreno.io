@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sent_emails', function (Blueprint $table): void {
-            $table->id();
-            $table->string('email')->unique();
-            $table->timestamps();
-        });
+        if (! Schema::hasTable('sent_emails')) {
+            Schema::create('sent_emails', function (Blueprint $table): void {
+                $table->id();
+                $table->string('email')->unique();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

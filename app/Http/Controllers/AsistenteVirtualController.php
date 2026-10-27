@@ -26,6 +26,7 @@ class AsistenteVirtualController extends Controller
         $email = mb_strtolower($email);
 
         $delivery = SentEmail::firstOrCreate(['email' => $email]);
+        $tracking = $delivery->recordOpenTracking('asistente-virtual');
 
         /*if (! $delivery->wasRecentlyCreated) {
             return response()->json([
@@ -34,9 +35,13 @@ class AsistenteVirtualController extends Controller
         }*/
 
         try {
-            Mail::to($email)->send(new AsistenteVirtualMail);
+            Mail::to($email)->send(new AsistenteVirtualMail($tracking->tracking_token));
         } catch (Throwable $exception) {
-            $delivery->delete();
+            $tracking->delete();
+
+            if ($delivery->wasRecentlyCreated) {
+                $delivery->delete();
+            }
 
             throw $exception;
         }

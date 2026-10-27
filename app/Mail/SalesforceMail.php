@@ -8,6 +8,8 @@ use Illuminate\Mail\Mailables\Envelope;
 
 class SalesforceMail extends Mailable
 {
+    public function __construct(public ?string $trackingToken = null) {}
+
     public function envelope(): Envelope
     {
         return new Envelope(

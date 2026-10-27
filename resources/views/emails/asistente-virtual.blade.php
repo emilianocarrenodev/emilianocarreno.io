@@ -71,5 +71,6 @@
             </td>
         </tr>
     </table>
+    @include('emails.partials.tracking-pixel')
 </div>
 </html>

@@ -8,6 +8,8 @@ use Illuminate\Mail\Mailables\Envelope;
 
 class WordPressMail extends Mailable
 {
+    public function __construct(public ?string $trackingToken = null) {}
+
     public function envelope(): Envelope
     {
         return new Envelope(

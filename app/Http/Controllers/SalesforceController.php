@@ -32,11 +32,16 @@ class SalesforceController extends Controller
                 'message' => 'Ya se envió un email a esta dirección.',
             ], Response::HTTP_CONFLICT);
         }
+        $tracking = $delivery->recordOpenTracking('salesforce');
 
         try {
-            Mail::to($email)->send(new SalesforceMail);
+            Mail::to($email)->send(new SalesforceMail($tracking->tracking_token));
         } catch (Throwable $exception) {
-            $delivery->delete();
+            $tracking->delete();
+
+            if ($delivery->wasRecentlyCreated) {
+                $delivery->delete();
+            }
 
             throw $exception;
         }

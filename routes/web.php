@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AsistenteVirtualController;
+use App\Http\Controllers\EmailOpenController;
 use App\Http\Controllers\SalesforceController;
 use App\Http\Controllers\WordPressController;
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/email/open/{token}', EmailOpenController::class)
+    ->name('email.open');
 
 Route::get('/asistente-virtual/{code}/{email}', [AsistenteVirtualController::class, 'sendEmail'])
     ->name('asistente-virtual');

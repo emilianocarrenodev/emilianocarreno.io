@@ -32,11 +32,16 @@ class WordPressController extends Controller
                 'message' => 'Ya se envió un email a esta dirección.',
             ], Response::HTTP_CONFLICT);
         }
+        $tracking = $delivery->recordOpenTracking('wordpress');
 
         try {
-            Mail::to($email)->send(new WordPressMail);
+            Mail::to($email)->send(new WordPressMail($tracking->tracking_token));
         } catch (Throwable $exception) {
-            $delivery->delete();
+            $tracking->delete();
+
+            if ($delivery->wasRecentlyCreated) {
+                $delivery->delete();
+            }
 
             throw $exception;
         }
