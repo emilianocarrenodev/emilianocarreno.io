@@ -6,8 +6,8 @@
     <meta name="x-apple-disable-message-reformatting">
     <title>Emiliano Carreño | Desarrollador Full Stack</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f3f3f3; color: #181818; font-family: Arial, Helvetica, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
-    <div style="display: none; max-height: 0; overflow: hidden; opacity: 0; color: transparent;">
+<div style="margin: 0; background-color: #f3f3f3; color: #181818; font-family: Arial, Helvetica, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+    <div style="display: none; max-height: 0; color: transparent;">
         Más de 10 años creando soluciones web con Laravel, Salesforce y tecnologías cloud.
     </div>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f3f3f3" style="width: 100%; background-color: #f3f3f3;">
@@ -48,17 +48,17 @@
                             </table>
                             <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top: 26px;">
                                 <tr>
-                                    <td align="center" bgcolor="#0176d3" style="background-color: #0176d3; border-radius: 4px;">
-                                        <a href="https://emilianocarreno.io/#proyectos" target="_blank" style="display: inline-block; padding: 13px 20px; color: #ffffff; font-size: 15px; font-weight: bold; text-decoration: none;">Ver portafolio</a>
+                                    <td align="center" bgcolor="#0176d3" style="padding: 13px 20px; background-color: #0176d3;">
+                                        <a href="https://emilianocarreno.io/#proyectos" style="color: #ffffff; font-size: 15px; font-weight: bold; text-decoration: none;">Ver portafolio</a>
                                     </td>
                                 </tr>
                             </table>
                             <p style="margin: 24px 0 8px; color: #181818; font-size: 15px; font-weight: bold; text-align: center;">Conectemos</p>
                             <p style="margin: 0; font-size: 14px; line-height: 1.8; text-align: center;">
                                 <a href="mailto:contact@emilianocarreno.io" style="color: #0176d3; text-decoration: underline;">contact@emilianocarreno.io</a><br>
-                                <a href="https://linkedin.com/in/emilianocarrenodev/" target="_blank" style="color: #0176d3; text-decoration: underline;">LinkedIn</a>
+                                <a href="https://linkedin.com/in/emilianocarrenodev/" style="color: #0176d3; text-decoration: underline;">LinkedIn</a>
                                 &nbsp;|&nbsp;
-                                <a href="https://github.com/emilianocarrenodev" target="_blank" style="color: #0176d3; text-decoration: underline;">GitHub</a>
+                                <a href="https://github.com/emilianocarrenodev" style="color: #0176d3; text-decoration: underline;">GitHub</a>
                             </p>
                         </td>
                     </tr>
@@ -71,5 +71,5 @@
             </td>
         </tr>
     </table>
-</body>
+</div>
 </html>

@@ -27,11 +27,11 @@ class AsistenteVirtualController extends Controller
 
         $delivery = SentEmail::firstOrCreate(['email' => $email]);
 
-        if (! $delivery->wasRecentlyCreated) {
+        /*if (! $delivery->wasRecentlyCreated) {
             return response()->json([
                 'message' => 'Ya se envió un email a esta dirección.',
             ], Response::HTTP_CONFLICT);
-        }
+        }*/
 
         try {
             Mail::to($email)->send(new AsistenteVirtualMail);
