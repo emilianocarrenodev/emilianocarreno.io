@@ -356,7 +356,7 @@
     }
 
     footer {
-        background-color: var(--sf-blue-deep);
+        background: var(--sf-gradient);
         color: var(--sf-white);
         padding: 3rem 2rem;
         text-align: center;
