@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\AsistenteVirtualController;
 use App\Http\Controllers\EmailOpenController;
-use App\Http\Controllers\SalesforceController;
-use App\Http\Controllers\WordPressController;
+use App\Http\Controllers\EnvioEmailsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,11 +11,8 @@ Route::get('/', function () {
 Route::get('/email/open/{token}', EmailOpenController::class)
     ->name('email.open');
 
-Route::get('/asistente-virtual/{code}/{email}', [AsistenteVirtualController::class, 'sendEmail'])
-    ->name('asistente-virtual');
+Route::get('/envio-emails/{code}', [EnvioEmailsController::class, 'create'])
+    ->name('envio-emails');
 
-Route::get('/salesforce/{code}/{email}', [SalesforceController::class, 'sendEmail'])
-    ->name('salesforce');
-
-Route::get('/wordpress/{code}/{email}', [WordPressController::class, 'sendEmail'])
-    ->name('wordpress');
+Route::post('/envio-emails/{code}', [EnvioEmailsController::class, 'sendEmail'])
+    ->name('envio-emails.send');
